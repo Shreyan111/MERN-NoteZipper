@@ -1,0 +1,16 @@
+{
+  "name": "mern-notezipper",
+  "version": "1.0.0",
+  "description": "manages all the notes",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon backend/server.js"
+  },
+  "author": "Shreyan Sanyal",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.16"
+  }
+}
