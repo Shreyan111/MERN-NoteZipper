@@ -8,8 +8,14 @@ import {
     NavDropdown
 } from "react-bootstrap";
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    let navigate = useNavigate();
+    function navigation() {
+        navigate('/');
+    }
+
     return (
         <Navbar bg="primary" expand="lg" variant='dark'>
             <Container>
@@ -30,8 +36,11 @@ const Header = () => {
                             </Link>
                         </Nav.Link>
                         <NavDropdown title="Shreyan Sanyal" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">My Profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Logout</NavDropdown.Item>
+                            <NavDropdown.Item href="#">My Profile</NavDropdown.Item>
+                            <NavDropdown.Item href="#" onClick={() => {
+                                localStorage.removeItem("userInfo");
+                                navigation();
+                            }}>Logout</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </Navbar.Collapse>
