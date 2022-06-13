@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import MainScreen from "../../components/MainScreen";
 import "./RegisterScreen.css";
-import axios from 'axios';
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../../actions/userActions";
 
-const RegisterScreen = () => {
+const RegisterScreen = ({ history }) => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState(
@@ -18,49 +20,64 @@ const RegisterScreen = () => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
   function navigation() {
     navigate('/login');
   }
+
+  const dispatch = useDispatch();
+
+  const userRegister = useSelector((state) => state.userRegister);
+  const { loading, error, userInfo } = userRegister;
+
+  useEffect(() => {
+    if (userInfo) {
+      navigation();
+    }
+  }, [history, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
     if (password !== confirmpassword) {
       setMessage("Passwords do not match");
-    } else {
-      setMessage("");
-      try {
-        const config = {
-          headers: {
-            "Content-type": "application/json",
-          },
-        };
+    } else dispatch(register(name, email, password, pic));
 
-        setLoading(true);
+    // if (password !== confirmpassword) {
+    //   setMessage("Passwords do not match");
+    // } else {
+    //   setMessage("");
+    //   try {
+    //     const config = {
+    //       headers: {
+    //         "Content-type": "application/json",
+    //       },
+    //     };
 
-        const { data } = await axios.post("/api/users", {
-          name,
-          pic,
-          email,
-          password
-        },
-          config
-        );
+    //     setLoading(true);
 
-        console.log(data);
+    //     const { data } = await axios.post("/api/users", {
+    //       name,
+    //       pic,
+    //       email,
+    //       password
+    //     },
+    //       config
+    //     );
 
-        localStorage.setItem('userInfo', JSON.stringify(data));
-        setLoading(false);
-        navigation();
+    //     console.log(data);
 
-      } catch (error) {
-        setError(error.response.data.message);
-        setLoading(false);
-      }
-    };
+    //     localStorage.setItem('userInfo', JSON.stringify(data));
+    //     setLoading(false);
+    //     navigation();
+
+    //   } catch (error) {
+    //     setError(error.response.data.message);
+    //     setLoading(false);
+    //   }
+    // }
   };
 
   return (

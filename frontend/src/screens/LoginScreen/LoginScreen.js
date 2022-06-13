@@ -1,18 +1,35 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import MainScreen from "../../components/MainScreen";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import "./LoginScreen.css";
-import axios from 'axios';
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../actions/userActions";
+// import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-function LoginScreen() {
+function LoginScreen({ history }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+
+    const userLogin = useSelector((state) => state.userLogin);
+
+    const { loading, error, userInfo } = userLogin;
+
+    useEffect(() => {
+        if (userInfo) {
+            // history.pushState('/mynotes');
+            navigation();
+        }
+    }, [history, userInfo]);
+
+
+    // const [error, setError] = useState(false);
+    // const [loading, setLoading] = useState(false);
     let navigate = useNavigate();
     function navigation() {
         navigate('/mynotes');
@@ -21,32 +38,34 @@ function LoginScreen() {
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json",
-                },
-            };
+        dispatch(login(email, password));
 
-            setLoading(true);
+        // try {
+        //     const config = {
+        //         headers: {
+        //             "Content-type": "application/json",
+        //         },
+        //     };
 
-            const { data } = await axios.post("/api/users/login", {
-                email,
-                password
-            },
-                config
-            );
+        //     setLoading(true);
 
-            console.log(data);
+        //     const { data } = await axios.post("/api/users/login", {
+        //         email,
+        //         password
+        //     },
+        //         config
+        //     );
 
-            localStorage.setItem('userInfo', JSON.stringify(data));
-            setLoading(false);
-            navigation();
+        //     console.log(data);
 
-        } catch (error) {
-            setError(error.response.data.message);
-            setLoading(false);
-        }
+        //     localStorage.setItem('userInfo', JSON.stringify(data));
+        //     setLoading(false);
+        //     navigation();
+
+        // } catch (error) {
+        //     setError(error.response.data.message);
+        //     setLoading(false);
+        // }
     };
 
     return (
