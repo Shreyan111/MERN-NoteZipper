@@ -12,9 +12,9 @@ dotenv.config();
 connectDB();
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send("API is running..");
-})
+// app.get('/', (req, res) => {
+//     res.send("API is running..");
+// })
 
 // app.get('/api/notes', (req, res) => {
 //     res.json(notes);
