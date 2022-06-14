@@ -34,10 +34,10 @@ app.use(errorHandler);
 // })
 
 // --------------------------deployment------------------------------
-__dirname = path.resolve();
+const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
-    app.use(express.static('frontend/build'));
+    app.use(express.static(path.join(__dirname, "/frontend/build")));
 
     app.get("*", (req, res) =>
         res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
@@ -48,12 +48,6 @@ if (process.env.NODE_ENV === "production") {
     });
 }
 // --------------------------deployment------------------------------
-
-// Error Handling middlewares
-// app.use(notFound);
-// app.use(errorHandler);
-
-
 
 const PORT = process.env.PORT || 5000;
 
