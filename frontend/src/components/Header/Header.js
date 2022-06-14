@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import { logout } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 
-const Header = () => {
+const Header = ({ setSearch }) => {
     let navigate = useNavigate();
     function navigation() {
         navigate('/');
@@ -39,7 +39,7 @@ const Header = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className='m-auto'>
                         <Form inline>
-                            <FormControl type="text" placeholder='Search' className='mr-sm-2' />
+                            <FormControl type="text" placeholder='Search' className='mr-sm-2' onChange={(e) => setSearch(e.target.value)} />
                         </Form>
                     </Nav>
                     <Nav>
