@@ -13,9 +13,9 @@ const MyNotes = ({ search }) => {
     const dispatch = useDispatch();
 
     let navigate = useNavigate();
-    function navigation() {
-        navigate('/');
-    }
+    // function navigation() {
+    //     navigate('/');
+    // }
 
     const noteList = useSelector((state) => state.noteList);
     const { loading, error, notes } = noteList;
@@ -44,10 +44,13 @@ const MyNotes = ({ search }) => {
 
     useEffect(() => {
         dispatch(listNotes());
+        function navigation() {
+            navigate('/');
+        }
         if (!userInfo) {
             navigation();
         }
-    }, [dispatch, userInfo, successDelete, successCreate, successUpdate])
+    }, [navigate, dispatch, userInfo, successDelete, successCreate, successUpdate])
 
     return (
         <MainScreen title={`Welcome Back ${userInfo && userInfo.name}..`}>

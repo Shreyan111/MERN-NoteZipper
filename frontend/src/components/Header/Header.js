@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../../actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Header = ({ setSearch }) => {
     let navigate = useNavigate();
@@ -20,9 +20,9 @@ const Header = ({ setSearch }) => {
 
     const dispatch = useDispatch();
 
-    const userLogin = useSelector((state) => state.userLogin);
+    // const userLogin = useSelector((state) => state.userLogin);
 
-    const { userInfo } = userLogin;
+    // const { userInfo } = userLogin;
 
     const logoutHandler = () => {
         dispatch(logout());

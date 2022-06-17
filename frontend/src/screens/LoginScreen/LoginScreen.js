@@ -20,20 +20,28 @@ function LoginScreen({ history }) {
 
     const { loading, error, userInfo } = userLogin;
 
+    let navigate = useNavigate();
+    // function navigation() {
+    //     navigate('/mynotes');
+    // }
+
     useEffect(() => {
+        function navigation() {
+            navigate('/mynotes');
+        }
         if (userInfo) {
             // history.pushState('/mynotes');
             navigation();
         }
-    }, [history, userInfo]);
+    }, [navigate, userInfo]);
 
 
     // const [error, setError] = useState(false);
     // const [loading, setLoading] = useState(false);
-    let navigate = useNavigate();
-    function navigation() {
-        navigate('/mynotes');
-    }
+    // let navigate = useNavigate();
+    // function navigation() {
+    //     navigate('/mynotes');
+    // }
 
     const submitHandler = async (e) => {
         e.preventDefault();

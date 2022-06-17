@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "../../actions/userActions";
 
-const RegisterScreen = ({ history }) => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [pic, setPic] = useState(
@@ -19,13 +19,13 @@ const RegisterScreen = ({ history }) => {
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const [picMessage, setPicMessage] = useState(null);
+  // const [picMessage, setPicMessage] = useState(null);
   // const [error, setError] = useState(false);
   // const [loading, setLoading] = useState(false);
   let navigate = useNavigate();
-  function navigation() {
-    navigate('/login');
-  }
+  // function navigation() {
+  //   navigate('/login');
+  // }
 
   const dispatch = useDispatch();
 
@@ -33,10 +33,13 @@ const RegisterScreen = ({ history }) => {
   const { loading, error, userInfo } = userRegister;
 
   useEffect(() => {
+    function navigation() {
+      navigate('/login');
+    }
     if (userInfo) {
       navigation();
     }
-  }, [history, userInfo]);
+  }, [navigate, userInfo]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
